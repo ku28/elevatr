@@ -9,7 +9,6 @@ import {
 import { Job, Resume } from "@/lib/types";
 import { AIConfig } from '@/utils/ai-tools';
 import { initializeAIClient } from '@/utils/ai-tools';
-import { checkRateLimit } from '@/lib/rateLimiter';
 
 
 export async function tailorResumeToJob(

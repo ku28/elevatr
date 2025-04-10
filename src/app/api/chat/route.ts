@@ -2,7 +2,6 @@ import { LanguageModelV1, ToolInvocation, smoothStream, streamText } from 'ai';
 import { Resume, Job } from '@/lib/types';
 import { initializeAIClient, type AIConfig } from '@/utils/ai-tools';
 import { tools } from '@/lib/tools';
-import { checkRateLimit } from '@/lib/rateLimiter';
 
 interface Message {
   role: 'user' | 'assistant';

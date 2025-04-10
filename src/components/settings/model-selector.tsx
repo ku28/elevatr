@@ -181,7 +181,7 @@ export function ModelSelector() {
               </>
             ) : (
               <span className="text-muted-foreground">
-                'No model available'
+                No model available
               </span>
             )}
           </div>

@@ -10,6 +10,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import Image from "next/image";
 
 interface LogoProps {
   className?: string;
@@ -98,7 +99,7 @@ export function Logo({ className, asLink = true }: LogoProps) {
     <ContextMenu>
       <ContextMenuTrigger>
         <div ref={logoRef} className="transition-transform duration-500 hover:scale-105 flex items-center space-x-2">
-          <img src="/logo.png" alt="Logo" className="h-8 w-8" />
+          <Image src="/logo.png" alt="Logo" width={32} height={32} className="h-8 w-8" />
           <div className={cn("text-2xl font-bold", className)}>
             Elevatr
           </div>
