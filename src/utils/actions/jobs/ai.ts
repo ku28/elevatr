@@ -2,9 +2,9 @@
 
 import { generateObject, LanguageModelV1 } from 'ai';
 import { z } from 'zod';
-import { 
-  simplifiedJobSchema, 
-  simplifiedResumeSchema, 
+import {
+  simplifiedJobSchema,
+  simplifiedResumeSchema,
 } from "@/lib/zod-schemas";
 import { Job, Resume } from "@/lib/types";
 import { AIConfig } from '@/utils/ai-tools';
@@ -12,18 +12,18 @@ import { initializeAIClient } from '@/utils/ai-tools';
 
 
 export async function tailorResumeToJob(
-  resume: Resume, 
+  resume: Resume,
   jobListing: z.infer<typeof simplifiedJobSchema>,
   config?: AIConfig
 ) {
   const aiClient = initializeAIClient(config);
-try {
+  try {
     const { object } = await generateObject({
-      model: aiClient as LanguageModelV1, 
+      model: aiClient as LanguageModelV1,
       schema: z.object({
-      content: simplifiedResumeSchema,
-    }),
-    system: `
+        content: simplifiedResumeSchema,
+      }),
+      system: `
 
 You are Elevatr, an advanced AI resume transformer that specializes in optimizing technical resumes for software engineering roles using machine-learning-driven ATS strategies. Your mission is to transform the provided resume into a highly targeted, ATS-friendly document that precisely aligns with the job description.
 
@@ -59,14 +59,14 @@ Transform the resume according to these principles, ensuring the final output is
 
 
     `,
-prompt: `
+      prompt: `
     This is the Resume:
     ${JSON.stringify(resume, null, 2)}
     
     This is the Job Description:
     ${JSON.stringify(jobListing, null, 2)}
     `,
-  });
+    });
 
 
     return object.content satisfies z.infer<typeof simplifiedResumeSchema>;
@@ -79,7 +79,7 @@ prompt: `
 export async function formatJobListing(jobListing: string, config?: AIConfig) {
   const aiClient = initializeAIClient(config);
 
-try {
+  try {
     const { object } = await generateObject({
       model: aiClient as LanguageModelV1,
       schema: z.object({
