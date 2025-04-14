@@ -147,18 +147,7 @@ export interface Profile {
 
 export const AI_PROVIDERS = {
   OPENAI: 'openai',
-  // AZURE: 'azure',
-  ANTHROPIC: 'anthropic',
-  // BEDROCK: 'bedrock',
-  // GOOGLE: 'google',
-  // VERTEX: 'vertex',
-  // MISTRAL: 'mistral',
-  // XAI: 'xai',
-  // TOGETHER: 'together',
-  // COHERE: 'cohere',
-  // FIREWORKS: 'fireworks',
-  // DEEPINFRA: 'deepinfra',
-  // GROQ: 'groq'
+  GOOGLE: 'google',
   DEEPSEEK: 'deepseek',
 } as const;
 
@@ -166,18 +155,7 @@ export type AIProvider = typeof AI_PROVIDERS[keyof typeof AI_PROVIDERS];
 
 export type ServiceName = 
   | 'openai'
-  // | 'azure'
-  | 'anthropic'
-  // | 'bedrock'
   | 'google'
-  // | 'vertex'
-  // | 'mistral'
-  // | 'xai'
-  // | 'together'
-  // | 'cohere'
-  // | 'fireworks'
-  // | 'deepinfra'
-  | 'groq'
   | 'deepseek';
 
 

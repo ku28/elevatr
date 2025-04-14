@@ -21,35 +21,48 @@ interface AIModel {
   id: string
   name: string
   provider: ServiceName
+  unstable: boolean
 }
 
-const LOCAL_STORAGE_KEY = 'Elevatr-api-keys'
-const MODEL_STORAGE_KEY = 'Elevatr-default-model'
+const LOCAL_STORAGE_KEY = 'elevatr-api-keys'
+const MODEL_STORAGE_KEY = 'elevatr-default-model'
 
 const PROVIDERS: { 
   id: ServiceName; 
   name: string; 
   apiLink: string;
+  unstable: boolean
 }[] = [
+  { 
+    id: 'openai', 
+    name: 'OpenAI',
+    apiLink: 'https://platform.openai.com/api-keys',
+    unstable: false
+  },
+  // Unstable providers
   {
     id: 'google',
     name: 'Google',
-    apiLink: 'https://ai.google/get-started/products/',
+    apiLink: 'https://aistudio.google.com/app/apikey',
+    unstable: true
   },
   { 
     id: 'deepseek', 
     name: 'DeepSeek', 
     apiLink: 'https://platform.deepseek.com/api-keys',
+    unstable: true 
   }
 ]
 
 const AI_MODELS: AIModel[] = [
-  { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai' },
-  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', provider: 'openai'},
-  { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet', provider: 'anthropic' },
-  { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'google' },
-  { id: 'gemini-2.0-flash-lite-preview-02-05', name: 'Gemini 2.0 Flash Lite', provider: 'google' },
-  { id: 'deepseek-chat', name: 'DeepSeek Chat (V3)', provider: 'deepseek' }
+  // Stable models
+  { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', unstable: false },
+  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', provider: 'openai', unstable: false },
+
+  // Unstable models
+  { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'google', unstable: true },
+  { id: 'gemini-2.0-flash-lite-preview-02-05', name: 'Gemini 2.0 Flash Lite', provider: 'google', unstable: true },
+  { id: 'deepseek-chat', name: 'DeepSeek Chat (V3)', provider: 'deepseek', unstable: true }
 ]
 
 export function ApiKeysForm() {
@@ -127,14 +140,10 @@ export function ApiKeysForm() {
     // Automatically set the default model based on the provider
     const autoSelectModel = () => {
       switch (service) {
-        case 'anthropic':
-          return 'claude-3-sonnet-20240229'
         case 'openai':
           return 'gpt-4o'
         case 'deepseek':
           return 'deepseek-chat'
-        case 'groq':
-          return 'llama-3.1-8b-instruct'
         default:
           return defaultModel
       }
@@ -231,6 +240,14 @@ export function ApiKeysForm() {
                   !isModelSelectable(model.id) ? 'opacity-50' : 'hover:bg-purple-50'
                 )}
               >
+                <div className="flex items-center gap-2">
+                  {model.name}
+                  {model.unstable && (
+                    <span className="text-amber-700 bg-amber-100 px-2 py-1 rounded-full text-xs font-medium">
+                      Unstable
+                    </span>
+                  )}
+                </div>
                 {!isModelSelectable(model.id) && (
                   <span className="ml-1.5 text-muted-foreground">(No API Key set)</span>
                 )}
@@ -251,16 +268,18 @@ export function ApiKeysForm() {
           </p>
           <div className="p-3 rounded-lg bg-amber-50/50 border border-amber-200/50 text-amber-900 text-sm">
               <>
-                <p><strong>Security Note:</strong> API keys are stored locally in your browser. While convenient, this means anyone with access to this device could potentially view your keys.</p>              
+                <p><strong>Security Note:</strong> API keys are stored locally in your browser. While convenient, this means anyone with access to this device could potentially view your keys.</p>
+                <p className="mt-1">For enhanced security, consider <a href="/pricing" className="text-amber-700 hover:text-amber-800 underline underline-offset-2">upgrading to a Pro account</a> where we securely manage API access for you.</p>
               </>
           </div>
         </div>
 
         <div className="space-y-4">
           {/* Stable Providers */}
-          {PROVIDERS.map(provider => {
+          {PROVIDERS.filter(p => !p.unstable).map(provider => {
             const existingKey = getExistingKey(provider.id)
             const isVisible = visibleKeys[provider.id]
+            const providerModels = AI_MODELS.filter(model => model.provider === provider.id)
 
             return (
               <div 
@@ -371,15 +390,28 @@ export function ApiKeysForm() {
                     </a>
                   </>
                 )}
+
+                {providerModels.length > 0 && (
+                  <div className="text-xs text-muted-foreground mt-2">
+                    Available models: {providerModels.map(m => `${m.name}${m.unstable ? ' (Unstable)' : ''}`).join(', ')}
+                  </div>
+                )}
               </div>
             )
           })}
-          
+
+          {/* Unstable Providers Section */}
           <div className="mt-8 pt-6 border-t border-amber-200/50">
-            {PROVIDERS.map(provider => {
+            <div className="mb-4 p-3 rounded-lg bg-amber-50/50 border border-amber-200/50 text-amber-900 text-sm">
+              <p className="font-medium">Experimental Providers Notice</p>
+              <p className="mt-1">The following providers are currently unstable. You may experience errors or intermittent service. We recommend using stable providers above for critical operations.</p>
+            </div>
+
+            {PROVIDERS.filter(p => p.unstable).map(provider => {
               const existingKey = getExistingKey(provider.id)
               const isVisible = visibleKeys[provider.id]
-              
+              const providerModels = AI_MODELS.filter(model => model.provider === provider.id)
+
               return (
                 <div 
                   key={provider.id}
@@ -388,6 +420,9 @@ export function ApiKeysForm() {
                     "relative border-amber-200/50"
                   )}
                 >
+                  <div className="absolute top-2 right-2 bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-medium">
+                    Unstable
+                  </div>
                   
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
@@ -490,6 +525,12 @@ export function ApiKeysForm() {
                         Get your {provider.name} API key →
                       </a>
                     </>
+                  )}
+
+                  {providerModels.length > 0 && (
+                    <div className="text-xs text-muted-foreground mt-2">
+                      Available models: {providerModels.map(m => `${m.name}${m.unstable ? ' (Unstable)' : ''}`).join(', ')}
+                    </div>
                   )}
                 </div>
               )

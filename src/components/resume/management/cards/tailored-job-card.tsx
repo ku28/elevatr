@@ -131,8 +131,8 @@ export function TailoredJobCard({
       setIsFormatting(true);
 
       // Get model and API key from local storage
-      const MODEL_STORAGE_KEY = 'Elevatr-default-model';
-      const LOCAL_STORAGE_KEY = 'Elevatr-api-keys';
+      const MODEL_STORAGE_KEY = 'elevatr-default-model';
+      const LOCAL_STORAGE_KEY = 'elevatr-api-keys';
 
       const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
       const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);

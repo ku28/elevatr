@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 function checkForApiKeys() {
-  const storedKeys = localStorage.getItem('Elevatr-api-keys')
+  const storedKeys = localStorage.getItem('elevatr-api-keys')
   if (!storedKeys) return false
   
   try {

@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 
 const MODEL_STORAGE_KEY = 'Elevatr-default-model'
-const LOCAL_STORAGE_KEY = 'Elevatr-api-keys'
+const LOCAL_STORAGE_KEY = 'elevatr-api-keys'
 
 interface ApiKey {
   service: ServiceName
@@ -25,9 +25,8 @@ interface AIModel {
 
 // Update image imports to use string paths
 const MODEL_ICONS = {
-  anthropic: '/claude.webp',
   openai: '/chatgpt.png',
-  // deepseek: '/deepseek.png',
+  deepseek: '/deepseek.png',
 } as const
 
 // Add ModelIcon component at the top of the file
@@ -50,18 +49,6 @@ function ModelIcon({ provider, size = 24 }: { provider: ServiceName; size?: numb
 }
 
 const AI_MODELS: AIModel[] = [
-  { 
-    id: 'claude-3-sonnet-20240229', 
-    name: 'Claude 3.5 Sonnet (Recommended)', 
-    shortName: 'Sonnet 3.5',
-    provider: 'anthropic'
-  },
-  { 
-    id: 'claude-3-5-haiku-20241022', 
-    name: 'Claude 3.5 Haiku', 
-    shortName: 'Haiku 3.5',
-    provider: 'anthropic'
-  },
   { 
     id: 'gpt-4o', 
     name: 'GPT-4o', 
