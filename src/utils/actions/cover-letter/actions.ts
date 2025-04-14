@@ -87,7 +87,7 @@ export async function generate(input: string, config?: AIConfig) {
 
       (async () => {
          const { textStream } = streamText({
-            model: aiClient,
+            model: aiClient as LanguageModelV1,
             system,
             prompt: input,
             onFinish: ({ usage }) => {
