@@ -66,7 +66,7 @@ export async function signup(formData: FormData): Promise<AuthResult> {
 export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect('/auth/login');
+  redirect('/');
 } 
 
 // Password Reset
@@ -196,6 +196,46 @@ export async function getUserId(): Promise<string | null> {
   }
 } 
 
+// New function to check subscription status
+export async function getSubscriptionStatus(): Promise<{
+  hasSubscription: boolean;
+  plan?: string;
+  status?: string;
+  error?: string;
+}> {
+  const supabase = await createClient();
+  
+  try {
+    const userId = await getUserId();
+    if (!userId) {
+      return { hasSubscription: false, error: 'No authenticated user' };
+    }
+
+    const { data: subscription, error } = await supabase
+      .from('subscriptions')
+      .select('subscription_plan, subscription_status')
+      .eq('user_id', userId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching subscription:', error);
+      return { hasSubscription: false, error: error.message };
+    }
+
+    return {
+      hasSubscription: !!subscription,
+      plan: subscription?.subscription_plan,
+      status: subscription?.subscription_status
+    };
+  } catch (error) {
+    console.error('Error checking subscription status:', error);
+    return { 
+      hasSubscription: false, 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    };
+  }
+} 
+
 export async function deleteUserAccount(formData: FormData) {
   'use server'
   
@@ -235,5 +275,5 @@ export async function deleteUserAccount(formData: FormData) {
     throw error
   }
 
-  redirect('/auth/login')
+  redirect('//')
 } 

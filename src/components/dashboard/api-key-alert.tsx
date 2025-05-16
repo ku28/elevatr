@@ -5,9 +5,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button"
 
 function checkForApiKeys() {
-  const storedKeys = localStorage.getItem('elevatr-api-keys')
+  const storedKeys = localStorage.getItem('Elevatr-api-keys')
   if (!storedKeys) return false
   
   try {
@@ -77,6 +78,7 @@ export function ApiKeyAlert() {
           <span className="text-red-600">
             Or upgrade to Pro to get Full Access to All Models
           </span>
+          <ProUpgradeButton />
         </div>
       </AlertDescription>
     </Alert>

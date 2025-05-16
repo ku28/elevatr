@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Menu, User } from "lucide-react";
 import { PageTitle } from "./page-title";
 // import { TogglePlanButton } from '@/components/settings/toggle-plan-button';
+import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -54,6 +55,7 @@ export function AppHeader({ children, showUpgradeButton = true }: AppHeaderProps
               <nav className="hidden md:flex items-center gap-2">
                 {showUpgradeButton && (
                   <>
+                    <ProUpgradeButton />
                     <div className="h-4 w-px bg-purple-200/50 ml-3" />
                   </>
                 )}
@@ -89,6 +91,7 @@ export function AppHeader({ children, showUpgradeButton = true }: AppHeaderProps
                     <SheetTitle>Menu</SheetTitle>
                   </SheetHeader>
                   <div className="flex flex-col gap-4 pt-6">
+                    {showUpgradeButton && <ProUpgradeButton className="w-full" />}
                     <Link
                       href="/profile"
                       onClick={() => setIsOpen(false)}

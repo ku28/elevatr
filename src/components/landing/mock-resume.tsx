@@ -10,24 +10,24 @@ export function MockResume() {
       rounded-none border-[0.5px] border-gray-200/50">
       {/* Header - Centered */}
       <div className="mb-6 text-center">
-        <h2 className="text-xl font-bold text-gray-900 mb-1">David Zhang</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Kushagra Juneja</h2>
         <p className="text-gray-600 text-sm mb-2">Full Stack Developer</p>
         <div className="flex flex-wrap items-center justify-center gap-3 text-[10px] text-gray-600">
           <div className="flex items-center gap-1">
             <Mail className="w-2.5 h-2.5" />
-            <span>david.zhang@gmail.com</span>
+            <span>kushagrajuneja7@gmail.com</span>
           </div>
           <div className="flex items-center gap-1">
             <MapPin className="w-2.5 h-2.5" />
-            <span>Vancouver, BC</span>
+            <span>New Delhi, India</span>
           </div>
           <div className="flex items-center gap-1">
             <Github className="w-2.5 h-2.5" />
-            <span>github.com/davidzhang-dev</span>
+            <span>github.com/ku28</span>
           </div>
           <div className="flex items-center gap-1">
             <Linkedin className="w-2.5 h-2.5" />
-            <span>linkedin.com/in/davidzhang-dev</span>
+            <span>linkedin.com/in/kush-juneja</span>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@ export function MockResume() {
               <h4 className="text-[11px] font-semibold text-gray-800">Full Stack Developer</h4>
               <p className="text-[10px] text-gray-600">May 2021 - Present</p>
             </div>
-            <p className="text-[10px] font-medium text-gray-700 mb-0.5">Clio, Vancouver, BC</p>
+            <p className="text-[10px] font-medium text-gray-700 mb-0.5">New Delhi, India</p>
             <ul className="text-[10px] text-gray-600 list-disc list-outside ml-3 space-y-0.5">
               <li>Developed and maintained key features for legal practice management platform using React and TypeScript</li>
               <li>Implemented AI-powered document analysis feature reducing manual review time by 60%</li>
@@ -66,7 +66,7 @@ export function MockResume() {
               <h4 className="text-[11px] font-semibold text-gray-800">Junior Developer</h4>
               <p className="text-[10px] text-gray-600">Jun 2019 - Apr 2021</p>
             </div>
-            <p className="text-[10px] font-medium text-gray-700 mb-0.5">Hootsuite, Vancouver, BC</p>
+            <p className="text-[10px] font-medium text-gray-700 mb-0.5">New Delhi, India</p>
             <ul className="text-[10px] text-gray-600 list-disc list-outside ml-3 space-y-0.5">
               <li>Built responsive dashboard components using React and Redux</li>
               <li>Collaborated on social media analytics features serving 100K+ users</li>
@@ -83,7 +83,7 @@ export function MockResume() {
           <div>
             <div className="flex justify-between items-baseline">
               <h4 className="text-[11px] font-semibold text-gray-800">AI Meeting Assistant</h4>
-              <p className="text-[10px] text-gray-600">github.com/davidzhang-dev/meeting-ai</p>
+              <p className="text-[10px] text-gray-600">github.com/ku28/prepai</p>
             </div>
             <ul className="text-[10px] text-gray-600 list-disc list-outside ml-3 space-y-0.5">
               <li>Built meeting summarization tool using OpenAI API, Next.js, and TypeScript</li>
@@ -92,11 +92,11 @@ export function MockResume() {
           </div>
           <div>
             <div className="flex justify-between items-baseline">
-              <h4 className="text-[11px] font-semibold text-gray-800">Vancouver Housing Market Analyzer</h4>
-              <p className="text-[10px] text-gray-600">github.com/davidzhang-dev/van-housing</p>
+              <h4 className="text-[11px] font-semibold text-gray-800">Housing Market Analyzer</h4>
+              <p className="text-[10px] text-gray-600">github.com/ku28/housage</p>
             </div>
             <ul className="text-[10px] text-gray-600 list-disc list-outside ml-3 space-y-0.5">
-              <li>Created web scraper and analysis tool for Vancouver real estate listings</li>
+              <li>Created web scraper and analysis tool for real estate listings</li>
               <li>Built interactive dashboard using Next.js, TailwindCSS, and Chart.js</li>
             </ul>
           </div>
@@ -108,10 +108,10 @@ export function MockResume() {
         <h3 className="text-[10px] font-bold text-gray-900 mb-1.5 uppercase tracking-wider border-b border-gray-200 pb-1">Education</h3>
         <div>
           <div className="flex justify-between items-baseline mb-0.5">
-            <h4 className="text-[11px] font-semibold text-gray-800">B.Sc. Computer Science</h4>
-            <p className="text-[10px] text-gray-600">2019</p>
+            <h4 className="text-[11px] font-semibold text-gray-800">BE. Computer Science</h4>
+            <p className="text-[10px] text-gray-600">2026</p>
           </div>
-          <p className="text-[10px] text-gray-600">University of British Columbia, Vancouver, BC</p>
+          <p className="text-[10px] text-gray-600">Chitkara University, Rajpura, Punjab</p>
           <p className="text-[10px] text-gray-600 mt-0.5">Focus: Software Engineering and Machine Learning</p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 interface FooterProps {
   variant?: 'fixed' | 'static';
@@ -13,8 +13,6 @@ export function Footer({ variant = 'fixed' }: FooterProps) {
           <p className="text-sm text-muted-foreground text-center md:text-left">
             Elevatr © 2025
           </p>
-          <span className="text-sm text-muted-foreground text-center">
-          </span>
         </div>
         <nav className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
           <Link
