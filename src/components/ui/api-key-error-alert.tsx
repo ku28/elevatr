@@ -1,5 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -77,6 +78,7 @@ export function ApiKeyErrorAlert({ error, router }: ApiKeyErrorAlertProps) {
               Unlock premium features and advanced AI capabilities
             </div>
             <div className="flex flex-col items-center gap-2 w-full">
+              <ProUpgradeButton />
               <Button
                 variant="ghost"
                 size="sm"

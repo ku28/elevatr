@@ -145,9 +145,32 @@ export interface Profile {
   updated_at: string;
 }
 
+export interface Subscription {
+  user_id: string;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  subscription_plan: 'free' | 'pro';
+  subscription_status: 'active' | 'canceled';
+  current_period_end: string | null;
+  trial_end: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export const AI_PROVIDERS = {
   OPENAI: 'openai',
-  GOOGLE: 'google',
+  // AZURE: 'azure',
+  ANTHROPIC: 'anthropic',
+  // BEDROCK: 'bedrock',
+  // GOOGLE: 'google',
+  // VERTEX: 'vertex',
+  // MISTRAL: 'mistral',
+  // XAI: 'xai',
+  // TOGETHER: 'together',
+  // COHERE: 'cohere',
+  // FIREWORKS: 'fireworks',
+  // DEEPINFRA: 'deepinfra',
+  // GROQ: 'groq'
   DEEPSEEK: 'deepseek',
 } as const;
 
@@ -155,7 +178,24 @@ export type AIProvider = typeof AI_PROVIDERS[keyof typeof AI_PROVIDERS];
 
 export type ServiceName = 
   | 'openai'
+  // | 'azure'
+  | 'anthropic'
+  // | 'bedrock'
   | 'google'
+  // | 'vertex'
+  // | 'mistral'
+  // | 'xai'
+  // | 'together'
+  // | 'cohere'
+  // | 'fireworks'
+  // | 'deepinfra'
+  | 'groq'
   | 'deepseek';
 
+export type SortDirection = 'ascending' | 'descending';
+
+export interface SortDescriptor<T> {
+  column: T;
+  direction: SortDirection;
+}
 

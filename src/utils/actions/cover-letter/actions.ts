@@ -3,13 +3,16 @@
 import { LanguageModelV1, streamText } from 'ai';
 import { createStreamableValue } from 'ai/rsc';
 import { initializeAIClient, type AIConfig } from '@/utils/ai-tools';
+import { getSubscriptionPlan } from '../stripe/actions';
 
 export async function generate(input: string, config?: AIConfig) {
-   try {
-      const stream = createStreamableValue('');
-      const aiClient = initializeAIClient(config);
+  try {
+    const stream = createStreamableValue('');
+    const subscriptionPlan = await getSubscriptionPlan();
+    const isPro = subscriptionPlan === 'pro';
+    const aiClient = isPro ? initializeAIClient(config, isPro) : initializeAIClient(config);
 
-      const system = `
+   const system = `
    
    You are a professional cover letter writer with expertise in crafting compelling, personalized cover letters. Your goal is to produce a cover letter that is clear, concise, and tailored to the job and candidate data provided. The final cover letter should be between 600-700 words and written in a consistent, professional tone that seamlessly blends technical details with personal enthusiasm.
 
@@ -85,35 +88,35 @@ export async function generate(input: string, config?: AIConfig) {
    
    `;
 
-      (async () => {
-         const { textStream } = streamText({
-            model: aiClient as LanguageModelV1,
-            system,
-            prompt: input,
-            onFinish: ({ usage }) => {
-               const { promptTokens, completionTokens, totalTokens } = usage;
+    (async () => {
+      const { textStream } = streamText({
+        model: aiClient as LanguageModelV1,
+        system,
+        prompt: input,
+        onFinish: ({ usage }) => {
+         const { promptTokens, completionTokens, totalTokens } = usage;
+  
+         // your own logic, e.g. for saving the chat history or recording usage
+         console.log('----------Usage:----------');
+         console.log('Prompt tokens:', promptTokens);
+         console.log('Completion tokens:', completionTokens);
+         console.log('Total tokens:', totalTokens);
+       },
+ 
+      });
 
-               // your own logic, e.g. for saving the chat history or recording usage
-               console.log('----------Usage:----------');
-               console.log('Prompt tokens:', promptTokens);
-               console.log('Completion tokens:', completionTokens);
-               console.log('Total tokens:', totalTokens);
-            },
+      for await (const delta of textStream) {
+        stream.update(delta);
+      }
 
-         });
+     
+      stream.done();
+    })();
 
-         for await (const delta of textStream) {
-            stream.update(delta);
-         }
-
-
-         stream.done();
-      })();
-
-      return { output: stream.value };
-   } catch (error) {
-      console.error('Error generating cover letter:', error);
-      throw error;
-   }
+    return { output: stream.value };
+  } catch (error) {
+    console.error('Error generating cover letter:', error);
+    throw error;
+  }
 }
 
