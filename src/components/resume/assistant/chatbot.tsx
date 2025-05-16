@@ -39,8 +39,8 @@ import { Textarea } from '@/components/ui/textarea';
 
 
 
-const LOCAL_STORAGE_KEY = 'elevatr-api-keys';
-const MODEL_STORAGE_KEY = 'elevatr-default-model';
+const LOCAL_STORAGE_KEY = 'Elevatr-api-keys';
+const MODEL_STORAGE_KEY = 'Elevatr-default-model';
 
 interface ChatBotProps {
   resume: Resume;

@@ -44,8 +44,8 @@ export function CoverLetterPanel({
     
     try {
       // Get model and API key from local storage
-      const MODEL_STORAGE_KEY = 'elevatr-default-model';
-      const LOCAL_STORAGE_KEY = 'elevatr-api-keys';
+      const MODEL_STORAGE_KEY = 'Elevatr-default-model';
+      const LOCAL_STORAGE_KEY = 'Elevatr-api-keys';
 
       const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
       const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -246,6 +246,10 @@ export function CoverLetterPanel({
         open={showErrorDialog}
         onOpenChange={setShowErrorDialog}
         errorMessage={errorMessage}
+        onUpgrade={() => {
+          setShowErrorDialog(false);
+          window.location.href = '/subscription';
+        }}
         onSettings={() => {
           setShowErrorDialog(false);
           window.location.href = '/settings';

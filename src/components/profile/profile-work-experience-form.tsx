@@ -147,7 +147,7 @@ export function ProfileWorkExperienceForm({ experiences, onChange }: ProfileWork
                         focus:border-cyan-500/40 focus:ring-1 focus:ring-cyan-500/20
                         hover:border-cyan-500/30 hover:bg-white/60 transition-colors
                         placeholder:text-gray-400 text-sm"
-                      placeholder="e.g., Vancouver, BC"
+                      placeholder="e.g., New Delhi, India"
                     />
                     <div className="absolute -top-2.5 left-2 px-1 bg-white/80 text-[9px] font-medium text-cyan-700">
                       LOCATION

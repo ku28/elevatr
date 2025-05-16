@@ -24,8 +24,8 @@ interface AIModel {
   unstable: boolean
 }
 
-const LOCAL_STORAGE_KEY = 'elevatr-api-keys'
-const MODEL_STORAGE_KEY = 'elevatr-default-model'
+const LOCAL_STORAGE_KEY = 'Elevatr-api-keys'
+const MODEL_STORAGE_KEY = 'Elevatr-default-model'
 
 const PROVIDERS: { 
   id: ServiceName; 
@@ -34,16 +34,28 @@ const PROVIDERS: {
   unstable: boolean
 }[] = [
   { 
+    id: 'anthropic', 
+    name: 'Anthropic',
+    apiLink: 'https://console.anthropic.com/',
+    unstable: false
+  },
+  { 
     id: 'openai', 
     name: 'OpenAI',
     apiLink: 'https://platform.openai.com/api-keys',
     unstable: false
   },
+  {
+    id: 'groq', 
+    name: 'Groq', 
+    apiLink: 'https://console.groq.com/keys',
+    unstable: false 
+  },
   // Unstable providers
   {
     id: 'google',
     name: 'Google',
-    apiLink: 'https://aistudio.google.com/app/apikey',
+    apiLink: 'https://ai.google/get-started/products/',
     unstable: true
   },
   { 
@@ -56,8 +68,15 @@ const PROVIDERS: {
 
 const AI_MODELS: AIModel[] = [
   // Stable models
+  { id: 'gpt-4.1', name: 'GPT 4.1', provider: 'openai', unstable: false },
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', unstable: false },
   { id: 'gpt-4o-mini', name: 'GPT-4o Mini', provider: 'openai', unstable: false },
+  { id: 'claude-3-7-sonnet-20250219', name: 'Claude 3.7 Sonnet', provider: 'anthropic', unstable: false },
+  { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet', provider: 'anthropic', unstable: false },
+  { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku', provider: 'anthropic', unstable: false },
+  { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', provider: 'groq', unstable: false },
+  { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B ', provider: 'groq', unstable: false },
+  { id: 'gemma2-9b-it', name: 'Gemma 2 9B', provider: 'groq', unstable: false },
 
   // Unstable models
   { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'google', unstable: true },
@@ -65,7 +84,7 @@ const AI_MODELS: AIModel[] = [
   { id: 'deepseek-chat', name: 'DeepSeek Chat (V3)', provider: 'deepseek', unstable: true }
 ]
 
-export function ApiKeysForm() {
+export function ApiKeysForm({ isProPlan }: { isProPlan: boolean }) {
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [visibleKeys, setVisibleKeys] = useState<Record<ServiceName, boolean>>({} as Record<ServiceName, boolean>)
   const [newKeyValues, setNewKeyValues] = useState<Record<ServiceName, string>>({} as Record<ServiceName, string>)
@@ -90,11 +109,16 @@ export function ApiKeysForm() {
     const storedModel = localStorage.getItem(MODEL_STORAGE_KEY)
     if (storedModel) {
       setDefaultModel(storedModel)
+    } else if (isProPlan) {
+      // Set default model to llama-3.3-70b-versatile for pro users if they haven't chosen one
+      setDefaultModel('llama-3.3-70b-versatile')
+      // Save to local storage so this preference persists
+      localStorage.setItem(MODEL_STORAGE_KEY, 'llama-3.3-70b-versatile')
     }
 
     // Mark initial load as complete
     setHasLoaded(true)
-  }, [])
+  }, [isProPlan])
 
   // Save API keys to local storage whenever they change
   useEffect(() => {
@@ -140,10 +164,14 @@ export function ApiKeysForm() {
     // Automatically set the default model based on the provider
     const autoSelectModel = () => {
       switch (service) {
+        case 'anthropic':
+          return 'claude-3-sonnet-20240229'
         case 'openai':
           return 'gpt-4o'
         case 'deepseek':
           return 'deepseek-chat'
+        case 'groq':
+          return 'llama-3.1-8b-instruct'
         default:
           return defaultModel
       }
@@ -197,11 +225,21 @@ export function ApiKeysForm() {
     const selectedModel = AI_MODELS.find(m => m.id === modelId)
     if (!selectedModel) return
 
+    // Skip key check for Pro users
+    if (!isProPlan) {
+      const hasRequiredKey = apiKeys.some(k => k.service === selectedModel.provider)
+      if (!hasRequiredKey) {
+        toast.error(`Please add your ${selectedModel.provider === 'openai' ? 'OpenAI' : 'Anthropic'} API key first`)
+        return
+      }
+    }
+
     setDefaultModel(modelId)
     toast.success('Default model updated successfully')
   }
 
   const isModelSelectable = (modelId: string) => {
+    if (isProPlan) return true // Bypass check for Pro users
     const model = AI_MODELS.find(m => m.id === modelId)
     if (!model) return false
     return apiKeys.some(k => k.service === model.provider)
@@ -267,10 +305,17 @@ export function ApiKeysForm() {
             Add your API keys to use premium AI models. Your keys are stored securely in your browser.
           </p>
           <div className="p-3 rounded-lg bg-amber-50/50 border border-amber-200/50 text-amber-900 text-sm">
+            {isProPlan ? (
+              <>
+                <p><strong>Pro Account Active:</strong> You have full access to all AI models without needing to manage API keys.</p>
+                <p className="mt-1">You can still add personal API keys below if you prefer to use your own credentials.</p>
+              </>
+            ) : (
               <>
                 <p><strong>Security Note:</strong> API keys are stored locally in your browser. While convenient, this means anyone with access to this device could potentially view your keys.</p>
                 <p className="mt-1">For enhanced security, consider <a href="/pricing" className="text-amber-700 hover:text-amber-800 underline underline-offset-2">upgrading to a Pro account</a> where we securely manage API access for you.</p>
               </>
+            )}
           </div>
         </div>
 
