@@ -1,5 +1,3 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import Link from "next/link";
 import { AuthDialog } from "@/components/auth/auth-dialog";
 
 export function Hero() {

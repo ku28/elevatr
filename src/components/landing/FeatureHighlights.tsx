@@ -1,55 +1,11 @@
 "use client"
 import React from 'react';
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
-import Link from "next/link";
 import { SplitContent } from '../ui/split-content';
 import { AuthDialog } from "@/components/auth/auth-dialog";
 
 const FeatureHighlights = () => {
   // Enhanced features with metrics, testimonials, and benefit-focused language
-
-
-  // Trusted by logos
-  const companies = [
-    { name: "Google", logo: "/logos/google.png" },
-    { name: "Microsoft", logo: "/logos/microsoft.webp" },
-    { name: "Amazon", logo: "/logos/amazon.png" },
-    { name: "Meta", logo: "/logos/meta.png" },
-    { name: "Netflix", logo: "/logos/netflix.png" },
-  ];
-
-  // Statistics counters
-  const stats = [
-    { value: "500+", label: "Resumes Created" },
-    { value: "89%", label: "Interview Rate" },
-    { value: "4.9/5", label: "User Rating" },
-    { value: "15 min", label: "Average Setup Time" },
-  ];
-
-  // Animation variants for scroll reveal
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
 
   return (
     <section className="py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden">

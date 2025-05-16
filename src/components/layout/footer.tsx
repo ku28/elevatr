@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 
 interface FooterProps {
   variant?: 'fixed' | 'static';

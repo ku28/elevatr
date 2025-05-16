@@ -6,7 +6,6 @@ import { ActionButtons } from "@/components/landing/action-buttons";
 import { Logo } from "@/components/ui/logo";
 import { PricingSection } from "@/components/landing/pricing-section";
 import { ErrorDialog } from "@/components/auth/error-dialog";
-import { HowItWorks } from "@/components/landing/how-it-works";
 import { Footer } from "@/components/layout/footer";
 import { SplitContent } from "@/components/ui/split-content";
 import { NavLinks } from "@/components/layout/nav-links";
